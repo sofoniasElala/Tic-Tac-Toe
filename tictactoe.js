@@ -1,7 +1,28 @@
 const tictactoe = (function () {
-    let currentPlayer; 
-    let playerOne;
-    let playerTwo;
+
+    const game = {
+        playerOne: {},
+        playerTwo: {},
+        currentPlayer: this.playerOne,
+        checkForWinner: function() {
+                let winningCombinations = [[0,1,2], [3,4,5], [2,5,8], [6,7,8], [1,4,7], [0,3,6], [2,4,6], [0,4,8]]
+                if(this.currentPlayer.positions.length >= 3){
+                    for(let nums of winningCombinations){
+                        if(nums.every(num =>  this.currentPlayer.positions.includes(num))) {
+                            console.log(`You Won ${this.currentPlayer.name}!`);
+                        } else if(this.playerOne.positions.length + this.playerTwo.positions.length == 9){
+                            console.log(`Draw!`);
+                        }
+                    }
+                }
+             },
+        changeCurrentPlayer: function() {
+            this.currentPlayer = this.currentPlayer === this.playerOne ? this.playerTwo : this.playerOne; 
+            console.log(`${this.currentPlayer.name}\'s turn: ${this.currentPlayer.marker}`);
+        }
+    }
+
+
     const gameBoard = {
         board: [],
         reset: function() {
@@ -17,46 +38,29 @@ const tictactoe = (function () {
     }
 
     function placeMarker(pos){
-        gameBoard.board[pos] = currentPlayer.marker;
-        currentPlayer.positions.push(pos);
+        gameBoard.board[pos] = game.currentPlayer.marker;
+        game.currentPlayer.positions.push(pos);
         print();
-        checkForWinner();
-        changeCurrentPlayer();
+        game.checkForWinner();
+        game.changeCurrentPlayer();
 
     }
 
     function start(){
-        playerOne = player('player one', 'X');
-        playerTwo = player('player two', 'O');
-        currentPlayer = playerOne;
+        game.playerOne = player('player one', 'X');
+        game.playerTwo = player('player two', 'O');
+        game.currentPlayer = game.playerOne;
     }
 
-    function changeCurrentPlayer(){
-        currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne; 
-        console.log(`${currentPlayer.name}\'s turn: ${currentPlayer.marker}`);
-    }
-
-    function checkForWinner(){
-        let winningCombinations = [[0,1,2], [3,4,5], [2,5,8], [6,7,8], [1,4,7], [0,3,6], [2,4,6], [0,4,8]]
-        if(currentPlayer.positions.length >= 3){
-            for(let nums of winningCombinations){
-                if(nums.every(num =>  currentPlayer.positions.includes(num))) {
-                    console.log(`You Won ${currentPlayer.name}!`);
-
-                }
-            }
-        }
-    }
 
     function resetGame(){
         gameBoard.reset();
-        playerOne, playerTwo = {};
-        currentPlayer = playerOne;
+        start();
     }
 
     function print(){
-        console.log('player one: ' + playerOne.positions);
-        console.log('player two: ' + playerTwo.positions);
+        console.log('player one: ' + game.playerOne.positions);
+        console.log('player two: ' + game.playerTwo.positions);
         console.log(gameBoard.board);
     }
 
