@@ -1,18 +1,44 @@
+@font-face {
+    font-family: Bebas_Neue;
+    src: url(./Bebas_Neue/BebasNeue-Regular.ttf);
+}
+
 body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    font-size: 16px;
+    font-family: Bebas_Neue;
+    font-size: 25px;
 }
 
 .container {
     margin: auto;
     display: grid;
     grid: repeat(3, 150px) / repeat(3, 150px);
-    border-style: dashed;
     place-content: center;
+    overflow: hidden;
 }
 .box {
+    background-color: white;
     border-style: groove;
     cursor: pointer;
+    font-size: 8rem;
+    text-align: center;
+    border-color: black;
+}
+
+.box:nth-child(1), .box:nth-child(4), .box:nth-child(7){
+    border-left: none;
+}
+
+.box:nth-child(3), .box:nth-child(6), .box:nth-child(9){
+    border-right: none;
+}
+
+.box:nth-child(1), .box:nth-child(2), .box:nth-child(3){
+    border-top: none;
+}
+
+.box:nth-child(7), .box:nth-child(8), .box:nth-child(9){
+    border-bottom: none;
 }
