@@ -29,6 +29,25 @@ const tictactoe = (function () {
             this.board = [];
         }
     }
+
+    const display = {
+        boxes: Array.from(document.getElementsByClassName('box')),
+       addToDisplay: function(box, marker){
+        box.textContent = marker;
+       },
+       addListener: function(){
+         this.boxes.forEach(box => {
+            box.addEventListener('click', ()=> {
+                this.addToDisplay(box, game.currentPlayer.marker);
+                box.style.pointerEvents = 'none';
+                placeMarker(+box.dataset.id);
+            })
+         })
+       },
+       enableBoxes: function (){
+            this.boxes.forEach(box => box.style.pointerEvents = 'none');
+       }
+    }
     
 
     function player(name, marker){
@@ -54,7 +73,7 @@ const tictactoe = (function () {
 
 
     function resetGame(){
-        gameBoard.reset();
+       display.enableBoxes();
         start();
     }
 
@@ -65,8 +84,9 @@ const tictactoe = (function () {
     }
 
     start();
+    display.addListener();
     console.log('Welcome to TIC TAC TOE')
-    return { placeMarker}
+    /*return { placeMarker}*/
 
 
 })();
