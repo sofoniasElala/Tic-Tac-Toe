@@ -4,6 +4,7 @@ const tictactoe = (function () {
         playerOne: {},
         playerTwo: {},
         currentPlayer: this.playerOne,
+        currentPlayerDisplay: document.querySelector('.current-player'),
         checkForWinner: function() {
                 let winningCombinations = [[0,1,2], [3,4,5], [2,5,8], [6,7,8], [1,4,7], [0,3,6], [2,4,6], [0,4,8]]
                 if(this.currentPlayer.positions.length >= 3){
@@ -18,6 +19,7 @@ const tictactoe = (function () {
              },
         changeCurrentPlayer: function() {
             this.currentPlayer = this.currentPlayer === this.playerOne ? this.playerTwo : this.playerOne; 
+            this.currentPlayerDisplay.textContent = `${this.currentPlayer.name}\'s turn`;
             console.log(`${this.currentPlayer.name}\'s turn: ${this.currentPlayer.marker}`);
         }
     }
@@ -45,7 +47,7 @@ const tictactoe = (function () {
          })
        },
        enableBoxes: function (){
-            this.boxes.forEach(box => box.style.pointerEvents = 'none');
+            this.boxes.forEach(box => box.style.pointerEvents = 'auto');
        }
     }
     
@@ -65,9 +67,9 @@ const tictactoe = (function () {
 
     }
 
-    function start(){
-        game.playerOne = player('player one', 'X');
-        game.playerTwo = player('player two', 'O');
+    function start(one, two){
+        game.playerOne = player(one, 'X');
+        game.playerTwo = player(two, 'O');
         game.currentPlayer = game.playerOne;
     }
 
@@ -77,13 +79,23 @@ const tictactoe = (function () {
         start();
     }
 
+    function getNames(){
+        const dialog = document.querySelector('.players-info');
+        dialog.addEventListener('close', () => {
+            start(document.getElementById('one').value !== '' ? document.getElementById('one').value : 'player one' ,
+             document.getElementById('two').value !== '' ? document.getElementById('two').value : 'player two');
+             game.currentPlayerDisplay.textContent = `${game.currentPlayer.name}\'s turn`;
+        })
+        dialog.showModal();
+    }
+
     function print(){
         console.log('player one: ' + game.playerOne.positions);
         console.log('player two: ' + game.playerTwo.positions);
         console.log(gameBoard.board);
     }
 
-    start();
+    getNames();
     display.addListener();
     console.log('Welcome to TIC TAC TOE')
     /*return { placeMarker}*/
