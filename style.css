@@ -20,7 +20,7 @@ body {
 }
 .box {
     background-color: white;
-    border-style: groove;
+    border-style: solid;
     cursor: pointer;
     font-size: 8rem;
     text-align: center;
@@ -43,9 +43,9 @@ body {
     border-bottom: none;
 }
 
-form button {
+form button, .restart, .close {
+    border-inline-width: none;
     border: none;
-    margin-left: 10px;
     background-color: black;
     color: white;
     font-family: inherit;
@@ -53,12 +53,16 @@ form button {
     cursor: pointer;
 }
 
-input::placeholder {
-    font-size: 0.7rem;
+form button{
+    margin-left: 10px;
+    padding: 5px 5px;
 }
 
 .title {
-    padding-left: 15px;
+    padding-left: 20px;
+}
+
+.title, label {
     font-size: 1.2em;
 }
 
@@ -82,4 +86,19 @@ form p {
     left: 38%;
     top: 13%;
     font-size: .9em;
+}
+
+.results {
+    min-width: 175px;
+    text-align: center;
+}
+
+footer {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+input, .close, .restart {
+    font-size: 100%;
+    font-family: inherit;
 }

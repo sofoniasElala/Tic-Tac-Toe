@@ -10,17 +10,16 @@ const tictactoe = (function () {
                 if(this.currentPlayer.positions.length >= 3){
                     for(let nums of winningCombinations){
                         if(nums.every(num =>  this.currentPlayer.positions.includes(num))) {
-                            console.log(`You Won ${this.currentPlayer.name}!`);
+                            showResults(`You Won ${this.currentPlayer.name}!`);
                         } else if(this.playerOne.positions.length + this.playerTwo.positions.length == 9){
-                            console.log(`Draw!`);
+                            showResults(`Draw!`);
                         }
                     }
                 }
              },
         changeCurrentPlayer: function() {
             this.currentPlayer = this.currentPlayer === this.playerOne ? this.playerTwo : this.playerOne; 
-            this.currentPlayerDisplay.textContent = `${this.currentPlayer.name}\'s turn`;
-            console.log(`${this.currentPlayer.name}\'s turn: ${this.currentPlayer.marker}`);
+            display.setCurrentPlayer();
         }
     }
 
@@ -48,6 +47,9 @@ const tictactoe = (function () {
        },
        enableBoxes: function (){
             this.boxes.forEach(box => box.style.pointerEvents = 'auto');
+       },
+       setCurrentPlayer: function(){
+        game.currentPlayerDisplay.textContent = `${game.currentPlayer.name}\'s turn`;
        }
     }
     
@@ -61,22 +63,43 @@ const tictactoe = (function () {
     function placeMarker(pos){
         gameBoard.board[pos] = game.currentPlayer.marker;
         game.currentPlayer.positions.push(pos);
-        print();
         game.checkForWinner();
         game.changeCurrentPlayer();
 
     }
 
-    function start(one, two){
+    function start(one, two, restart = false){
+        if(!restart){
         game.playerOne = player(one, 'X');
         game.playerTwo = player(two, 'O');
+        }
         game.currentPlayer = game.playerOne;
+        display.setCurrentPlayer();
     }
 
 
     function resetGame(){
        display.enableBoxes();
-        start();
+        start(null, null, true);
+        game.playerOne.positions = [];
+        game.playerTwo.positions = [];
+        Array.from(document.getElementsByClassName('box')).forEach((box) => box.textContent = '');
+
+    }
+
+    function showResults(status){
+        const dialog = document.querySelector('.results');
+        const statusDisplay = document.querySelector('.results>p');
+        const restartButton = document.querySelector('.restart');
+        const closeButton = document.querySelector('.close');
+        closeButton.addEventListener("click", ()=> dialog.close())
+        statusDisplay.textContent = status;
+        restartButton.addEventListener('click', ()=> {
+            resetGame();
+            dialog.close();
+        });
+       dialog.showModal();
+
     }
 
     function getNames(){
@@ -84,21 +107,11 @@ const tictactoe = (function () {
         dialog.addEventListener('close', () => {
             start(document.getElementById('one').value !== '' ? document.getElementById('one').value : 'player one' ,
              document.getElementById('two').value !== '' ? document.getElementById('two').value : 'player two');
-             game.currentPlayerDisplay.textContent = `${game.currentPlayer.name}\'s turn`;
+             display.setCurrentPlayer();
         })
         dialog.showModal();
     }
 
-    function print(){
-        console.log('player one: ' + game.playerOne.positions);
-        console.log('player two: ' + game.playerTwo.positions);
-        console.log(gameBoard.board);
-    }
-
     getNames();
     display.addListener();
-    console.log('Welcome to TIC TAC TOE')
-    /*return { placeMarker}*/
-
-
 })();

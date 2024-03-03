@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/5f4c6a7a78.js" crossorigin="anonymous"></script>
     <script src="./tictactoe.js" defer></script>
     <title>Tic Tac Toe</title>
 </head>
@@ -14,15 +15,19 @@
         <form action="" method="dialog">
             <p>Enter your names</p>
             <div class="inputs">
-                <label for="one" class="player-one">Player one</label>
+                <label for="one" class="player-one">X</label>
                 <input type="text" name="player-one" id="one" placeholder="DEFAULT: PLAYER ONE">
-                <label for="two" class="player-two">Player two</label>
+                <label for="two" class="player-two">O</label>
                 <input type="text" name="player-two" id="two" placeholder="DEFAULT: PLAYER TWO">
-                <button class="start">Start</button>
+                <button class="start" autofocus>Start</button>
             </div>
         </form>
     </dialog>
-    <dialog class="results"></dialog>
+    <dialog class="results">
+        <button class="close">X</button>
+        <p></p>
+        <button class="restart">restart</button>
+    </dialog>
     <p class="current-player"></p>
     <div class="container">
         <div class="box" data-id="0"></div>
@@ -35,6 +40,6 @@
         <div class="box" data-id="7"></div>
         <div class="box" data-id="8"></div>
     </div>
-    <footer>copyright</footer>
+    <footer>Copyright © <span id="date"></span> SofoniasElala  <a href="https://github.com/sofoniasElala/Tic-Tac-Toe"><i class="fa-brands fa-github" style="color: #000000;"></i></a> </div</footer>
 </body>
 </html>
